@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
 		  command.name = "clear";
 		  break;
 	  case 'X':
-		  command.name = NULL;
+		  command.name = command.argv[1];
 		  break;
 	  case 'H':
 		  helpPrompt();

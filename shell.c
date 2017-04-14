@@ -39,6 +39,7 @@
 #include <string.h>
 #include <malloc.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define MAX_ARGS	64
 #define MAX_ARG_LEN	16
@@ -96,8 +97,20 @@ int main(int argc, char *argv[]) {
 	  case 'X':
 		  command.name = command.argv[1];
 		  break;
+	  case 'L':
+		  command.name = "ls";
+		  break;
 	  case 'H':
 		  helpPrompt();
+		  break;
+	  case 'E':
+		  command.name = "echo";
+		  break;
+	  case 'Q':
+		  exit( 0 );
+		  break;
+	  default:
+		  printf( "Unrecognized command. Enter 'H' for help\n" );
 		  break;
 	  }
 
@@ -155,11 +168,11 @@ int parseCommand(char *cLine, struct command_t *cmd) {
 /* Print prompt and read command functions - pp. 79-80 */
 
 void printPrompt() {
-   /* Build the prompt string to have the machine name,
-    * current directory, or other desired information
-    */
-   char* promptString = "sdg31@linux|>";
-   printf("%s ", promptString);
+	/* Build the prompt string to have the machine name,
+	 * current directory, or other desired information
+	 */
+	char* promptString = "sdg31@linux|>";
+	printf("%s ", promptString);
 }
 
 void readCommand(char *buffer) {

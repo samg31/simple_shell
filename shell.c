@@ -99,6 +99,7 @@ int main(int argc, char *argv[]) {
 		  break;
 	  case 'L':
 		  command.name = "ls";
+		  command.argv[command.argc++] = "-l";
 		  break;
 	  case 'H':
 		  helpPrompt();

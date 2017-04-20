@@ -117,7 +117,7 @@ int main(int argc, char *argv[]) {
 		  break;
 	  case 'H':
 		  helpPrompt();
-		  break;
+		  continue;
 	  case 'E':
 		  command.name = "echo";
 		  break;
@@ -126,7 +126,6 @@ int main(int argc, char *argv[]) {
 		  break;
 	  default:
 		  printf( "Unrecognized command. Enter 'H' for help\n" );
-		  command.name = ":";
 		  continue;
 	  }
 

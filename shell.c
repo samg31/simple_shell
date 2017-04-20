@@ -71,9 +71,14 @@ int main(int argc, char *argv[]) {
       printPrompt();
       /* Read the command line and parse it */
       readCommand(cmdLine);
+	
+      /*Display another prompt if the input is just
+	the enter key*/
+      if(cmdLine[0] == '\n')
+          continue;
+
       /*...*/
       parseCommand(cmdLine, &command);
-
 	  switch( command.argv[0][0] )
 	  {
 	  case 'C':
@@ -98,12 +103,21 @@ int main(int argc, char *argv[]) {
 		  command.name = command.argv[1];
 		  break;
 	  case 'L':
+		   if ((pid = fork()) == 0) {
+         	      /* Child executing command */
+		      printf("\n");
+		      char * empty[2] = {"pwd", NULL};
+		      execvp("pwd", empty);
+                  }
+		  /* Wait for the child to terminate */
+	          wait(&status);
+		  printf("\n");
 		  command.name = "ls";
 		  command.argv[command.argc++] = "-l";
 		  break;
 	  case 'H':
 		  helpPrompt();
-		  break;
+		  continue;
 	  case 'E':
 		  command.name = "echo";
 		  break;
@@ -112,7 +126,7 @@ int main(int argc, char *argv[]) {
 		  break;
 	  default:
 		  printf( "Unrecognized command. Enter 'H' for help\n" );
-		  break;
+		  continue;
 	  }
 
 	  command.argv[command.argc] = NULL;
@@ -200,6 +214,9 @@ void helpPrompt()
 	printf( "D file\n" );
 	printf( "Delete file with name 'file'\n\n" );
 
+	printf( "E comment\n" );
+        printf( "Display 'comment' from input onto the screen\n\n" );
+
 	printf( "M file\n" );
 	printf( "Open 'file' in the nano text editor\n\n" );
 
@@ -214,4 +231,7 @@ void helpPrompt()
 
 	printf( "X program\n" );
 	printf( "Execute 'program'\n\n" );
+
+	printf( "Q\n" );
+        printf( "Quit the shell\n\n" );
 }
